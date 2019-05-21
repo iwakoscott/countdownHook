@@ -61,11 +61,11 @@ function useCountdown(callback, timeout, options = { pauseOnReset: true }) {
 function App() {
   const [time, setTime] = React.useState(10000);
   const [complete, setComplete] = React.useState(false);
-
+  const [pauseOnReset, setPauseOnReset] = React.useState(false);
   const { toggleCountdown, isActive, countdown, resetCountdown } = useCountdown(
     () => setComplete(true),
     time,
-    { pauseOnReset: false }
+    { pauseOnReset }
   );
 
   if (complete) {
@@ -76,7 +76,9 @@ function App() {
     <div className="App">
       <h1>{`${countdown / 1000} seconds`}</h1>
       <p>{isActive ? "COUNTING DOWN" : "PAUSED"}</p>
+      <label htmlFor="timeout-slider">Time: </label>
       <input
+        id="timeout-slider"
         step="1000"
         min="1000"
         max="20000"
@@ -86,6 +88,9 @@ function App() {
       />
       <button onClick={toggleCountdown}>{isActive ? "PAUSE" : "START"}</button>
       <button onClick={resetCountdown}>RESET</button>
+      <button onClick={() => setPauseOnReset(prev => !prev)}>
+        {pauseOnReset ? "👍" : "👎"}
+      </button>
     </div>
   );
 }
