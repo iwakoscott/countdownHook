@@ -1,2 +1,0 @@
-# countdownHook
-Created with CodeSandbox
