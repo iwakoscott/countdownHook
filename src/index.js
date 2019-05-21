@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./styles.css";
 
-function useCountdown(callback, timeout) {
+function useCountdown(callback, timeout, options = { pauseOnReset: true }) {
   const [state, dispatch] = React.useReducer(
     (state, action) => {
       switch (action.type) {
@@ -17,7 +17,7 @@ function useCountdown(callback, timeout) {
         case "RESET_COUNTDOWN":
           return {
             ...state,
-            isActive: false,
+            isActive: options.pauseOnReset ? false : true,
             countdown: action.timeout
           };
         default:
@@ -64,7 +64,8 @@ function App() {
 
   const { toggleCountdown, isActive, countdown, resetCountdown } = useCountdown(
     () => setComplete(true),
-    time
+    time,
+    { pauseOnReset: false }
   );
 
   if (complete) {
